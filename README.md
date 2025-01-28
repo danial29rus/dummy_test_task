@@ -12,7 +12,7 @@ cd deploy
 sudo docker compose up --build
 
 Запустить скрипт клиента
-```bash
+
 docker exec dummy_server2 python -m app.client
 
 Пример результата
