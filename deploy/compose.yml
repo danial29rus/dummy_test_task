@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: dummy_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "6543:5432"  
+    tmpfs: 
+      - /var/lib/postgresql/data
+
+  server1:
+    build:
+      context: ../
+      dockerfile: deploy/Dockerfile
+
+    container_name: dummy_server1
+    depends_on:
+      - db
+    env_file:
+      - .env 
+    ports:
+      - "8123:8123" 
+    command: >- 
+      sh -c "
+      alembic upgrade head &&
+      uvicorn app.server:app --no-server-header --proxy-headers --workers=2 --host=0.0.0.0 --port=8123"
+
+
+  server2:
+    build:
+      context: ../
+      dockerfile: deploy/Dockerfile
+
+    container_name: dummy_server2
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "8124:8124"
+    command: >-
+      sh -c "uvicorn app.server:app --no-server-header --proxy-headers --workers=2 --host=0.0.0.0 --port=8124"
+

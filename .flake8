@@ -1,0 +1,4 @@
+[flake-8]
+exclude = .git,__pycache__, __init__.py
+max-line-length = 79
+ignore = E203 

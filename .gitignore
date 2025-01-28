@@ -1,0 +1,21 @@
+# Ignore all dot files (otherwise use the `--force` flag).
+.*
+data/
+
+# But not these files...
+!.gitignore
+!.gitmodules
+!.flake8
+!.dockerignore
+!.env.example
+
+# Ignore Python optimizations (Byte-compiled / optimized / DLL files).
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore virtual environments.
+venv/
+/.env
+*.json
+scripts/x.py
